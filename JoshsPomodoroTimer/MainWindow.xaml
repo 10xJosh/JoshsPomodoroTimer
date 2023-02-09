@@ -1,0 +1,34 @@
+﻿<Window x:Class="JoshsPomodoroTimer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JoshsPomodoroTimer"
+        mc:Ignorable="d" Background="Transparent" 
+        WindowStyle="None" AllowsTransparency="True"
+        Height="450" Width="800"
+        >
+    <Border Background="#272532" CornerRadius="15">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="183*"/>
+                <ColumnDefinition Width="569*"/>
+                <ColumnDefinition Width="48*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="23*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Foreground="White" 
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" Height="16" Width="149"
+                       FontWeight="Black"
+                       >
+                Josh's Pomodoro Timer
+            </TextBlock>
+            <Image Grid.Column="2" Margin="10,8,16,6"
+                  Source="/Theme/closebutton.png"
+                  MouseLeftButtonDown="exitButton" />
+        </Grid>
+    </Border>
+</Window>
