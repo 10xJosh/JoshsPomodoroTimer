@@ -8,7 +8,7 @@
         WindowStyle="None" AllowsTransparency="True"
         Height="450" Width="800"
         >
-    <Border Background="#272532" CornerRadius="15">
+    <Border Background="#272032" CornerRadius="15">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="183*"/>
@@ -28,7 +28,12 @@
             </TextBlock>
             <Image Grid.Column="2" Margin="10,8,16,6"
                   Source="/Theme/closebutton.png"
-                  MouseLeftButtonDown="exitButton" />
+                  MouseLeftButtonDown="btnExit_Click" />
+            <Image MouseLeftButtonDown="btnStart_Click" Grid.Column="1" Margin="10,314,419,10" Grid.Row="1" 
+                   Source="/Theme/Start.png" Stretch="Fill"/>
+            <Image MouseLeftButtonDown="btnPause_Click" Grid.Column="1" Margin="155,314,274,10" Grid.Row="1" Source="/Theme/pause.png" Stretch="Fill"/>
+            <Image MouseLeftButtonDown="btnStop_Click" Grid.Column="1" Margin="295,314,134,10" Grid.Row="1" Source="/Theme/stop.png" Stretch="Fill"/>
+            <Image MouseLeftButtonDown="btnSettings_Click" Grid.Column="1" Margin="528,-2,0,410" Source="/Theme/gear.png" Stretch="Fill" Grid.RowSpan="2"/>
         </Grid>
     </Border>
 </Window>

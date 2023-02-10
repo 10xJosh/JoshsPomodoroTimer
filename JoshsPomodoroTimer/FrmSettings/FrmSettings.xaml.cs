@@ -10,22 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace JoshsPomodoroTimer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for FrmSettings.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class FrmSettings : Window
     {
-        public MainWindow()
+        public FrmSettings()
         {
             InitializeComponent();
         }
 
-        // This allows the window to be moved around when WindowStyle=None
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             base.OnMouseDown(e);
@@ -39,25 +37,10 @@ namespace JoshsPomodoroTimer
             }
         }
 
-        private void btnStart_Click(object sender, MouseButtonEventArgs e)
+        private void btnSave_Click(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Start");
-        }
-
-        private void btnStop_Click(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("Stop");
-        }
-
-        private void btnPause_Click(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("Pause");
-        }
-
-        private void btnSettings_Click(object sender, MouseButtonEventArgs e)
-        {
-            FrmSettings frmSettings= new FrmSettings();
-            frmSettings.ShowDialog();
+            MessageBox.Show("Saved");
+            this.Close();
         }
 
         private void btnExit_Click(object sender, MouseButtonEventArgs e)

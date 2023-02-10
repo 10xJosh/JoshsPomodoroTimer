@@ -1,0 +1,22 @@
+﻿<Window x:Class="JoshsPomodoroTimer.FrmSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:JoshsPomodoroTimer"
+        mc:Ignorable="d" Background="Transparent" 
+        WindowStyle="None" AllowsTransparency="True"
+        Height="400" Width="300">
+    <Border Background="#272532" CornerRadius="15">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="37*"/>
+                <RowDefinition Height="290*"/>
+                <RowDefinition Height="73*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Settings" FontWeight="Heavy" Foreground="White" Height="25" Margin="10,6,206,6"/>
+            <Image MouseLeftButtonDown="btnExit_Click" Margin="271,10,10,6" Source="/Theme/closebutton.png" Stretch="Fill"/>
+            <Image MouseLeftButtonDown="btnSave_Click" Margin="94,3,94,0" Grid.Row="2" Source="/Theme/Save.png" Stretch="Fill"/>
+        </Grid>
+    </Border>
+</Window>

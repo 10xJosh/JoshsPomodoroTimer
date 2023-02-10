@@ -9,10 +9,20 @@
 
   <ItemGroup>
     <None Remove="Theme\closebutton.png" />
+    <None Remove="Theme\gear.png" />
+    <None Remove="Theme\pause.png" />
+    <None Remove="Theme\Save.png" />
+    <None Remove="Theme\start.png" />
+    <None Remove="Theme\stop.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Theme\closebutton.png" />
+    <Resource Include="Theme\gear.png" />
+    <Resource Include="Theme\pause.png" />
+    <Resource Include="Theme\Save.png" />
+    <Resource Include="Theme\start.png" />
+    <Resource Include="Theme\stop.png" />
   </ItemGroup>
 
 </Project>
