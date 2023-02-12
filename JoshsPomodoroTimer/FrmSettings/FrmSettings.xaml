@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:JoshsPomodoroTimer"
         mc:Ignorable="d" Background="Transparent" 
         WindowStyle="None" AllowsTransparency="True"
-        Height="400" Width="300">
+        Height="400" Width="300" WindowStartupLocation="CenterScreen">
     <Border Background="#272532" CornerRadius="15">
         <Grid>
             <Grid.RowDefinitions>
