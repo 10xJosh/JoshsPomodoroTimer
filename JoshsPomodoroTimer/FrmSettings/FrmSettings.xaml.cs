@@ -22,6 +22,7 @@ namespace JoshsPomodoroTimer
         public FrmSettings()
         {
             InitializeComponent();
+
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)

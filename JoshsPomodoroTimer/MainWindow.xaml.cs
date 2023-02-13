@@ -19,7 +19,7 @@ namespace JoshsPomodoroTimer
 {
     public partial class MainWindow : Window
     {
-
+        public int Timer = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,10 +40,22 @@ namespace JoshsPomodoroTimer
                 return;
             }
         }
-
+        // TODO RE PLACE BELOW
         private void btnStart_Click(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Start");
+            DispatcherTimer dispatchTimer = new DispatcherTimer();
+            dispatchTimer.Interval = TimeSpan.FromSeconds(1);
+            dispatchTimer.Tick += yeehaw;
+            dispatchTimer.Start();
+
+            //MessageBox.Show("Start");
+        }
+
+        private void yeehaw(object o, EventArgs e)
+        {
+            Timer++;
+
+            lblTimer.Content = Timer.ToString();
         }
 
         private void btnStop_Click(object sender, MouseButtonEventArgs e)

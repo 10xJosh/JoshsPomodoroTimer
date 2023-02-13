@@ -8,7 +8,7 @@
         WindowStyle="None" AllowsTransparency="True"
         Height="450" Width="800" WindowStartupLocation="CenterScreen">
 
-    <Border Background="#272032" CornerRadius="15">
+    <Border Background="#271d38" CornerRadius="15">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="183*"/>
@@ -17,9 +17,9 @@
                 <ColumnDefinition Width="48*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="12*"/>
-                <RowDefinition Height="17*"/>
-                <RowDefinition Height="121*"/>
+                <RowDefinition Height="18*"/>
+                <RowDefinition Height="29*"/>
+                <RowDefinition Height="178*"/>
             </Grid.RowDefinitions>
             <TextBlock Foreground="White" 
                        HorizontalAlignment="Center"
@@ -35,14 +35,26 @@
                    Source="/Theme/Start.png" Stretch="Fill"/>
             <Image MouseLeftButtonDown="btnPause_Click" Grid.Column="1" Margin="155,263,166,10" Grid.Row="2" Source="/Theme/pause.png" Stretch="Fill"/>
             <Image MouseLeftButtonDown="btnStop_Click" Grid.Column="1" Margin="295,263,26,10" Grid.Row="2" Source="/Theme/stop.png" Stretch="Fill"/>
-            <Image MouseLeftButtonDown="btnSettings_Click" Grid.Column="2" Margin="67,-2,0,47" Source="/Theme/gear.png" Stretch="Fill" Grid.RowSpan="2"/>
+            <Image MouseLeftButtonDown="btnSettings_Click" Grid.Column="2" Margin="68,0,42,56" Source="/Theme/gear.png" Stretch="Fill" Grid.ColumnSpan="2"
+                   ToolTip="Click to open the settings menu" Grid.RowSpan="2"
+                   />
             <Label Name="lblTimer" Foreground="White" FontWeight="Heavy" Content="0:00" 
                    HorizontalAlignment="Left" Grid.Row="2"  VerticalAlignment="Top"
-                   Width="209" FontSize="90" Grid.Column="1" Margin="123,79,0,0" 
+                   Width="209" FontSize="90" Grid.Column="1" Margin="123,79,0,0" Height="130" 
                    />
-            <Label Name="lbl" Foreground="White" FontWeight="Heavy" Content="Focus Time! You Got This!" 
+            <Label Name="lblHeader" Foreground="White" FontWeight="Heavy" Content="Nothing to it but to do it!" 
                    HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"
-                   MaxHeight="45" MaxWidth="400" FontSize="30" Height="45" Width="394"
+                   MaxHeight="70" MaxWidth="400" FontSize="30" Height="58" Width="394"
+                   />
+            <Label Content="🍅 Count:" Grid.Column="2" 
+                   Foreground="White" FontWeight="Heavy" FontSize="20"
+                   Grid.ColumnSpan="2" Margin="0,108,-33,204" Grid.Row="2"
+                   ToolTip="After every 4 sessions, you get an extended break!"
+                   />
+            <Label Name="lblPomodoroCount" Content="0" Foreground="White" FontWeight="Heavy" 
+                   FontSize="20" Height="45" Width="50" VerticalAlignment="Top"
+                   HorizontalAlignment="Left" Grid.Row="2" Grid.Column="2" Margin="51,144,0,0"
+                   ToolTip="After every 4 sessions, you get an extended break!"
                    />
         </Grid>
     </Border>
