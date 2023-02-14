@@ -44,12 +44,22 @@
                    Grid.RowSpan="2" Margin="10,0,-10,0"
                    />
 
+            <ComboBox Name="cmboBoxAlarmSounds" Grid.Row="3" Width="150" Height="20" 
+                      Margin="131,4,19,15"
+                      />
+
             <Label Grid.Row="4" Foreground="White" FontWeight="SemiBold" 
                    Content="Volume:" FontSize="14" 
-                   Grid.RowSpan="2" Margin="10,0,-10,1"
+                   Grid.RowSpan="3" Margin="10,6,-10,41"
                    />
-
-
+            <!-- TODO: figure out why value isnt changed when program is loaded -->
+            <Slider Name="sldrVolume" TickFrequency="1" Ticks="100"
+                    HorizontalAlignment="Left" Margin="160,0,0,0" Grid.Row="4" 
+                    VerticalAlignment="Center" Width="120" 
+                    Value="{Binding Path=Volume}" 
+                    ValueChanged="sldrVolume_ValueChanged" 
+                    />
+            
             <Label Grid.Row="5" Foreground="White" FontWeight="SemiBold" 
                    Content="Custom Timer interval" FontSize="14" 
                    Grid.RowSpan="2" Margin="10,0,-10,0"
@@ -58,6 +68,7 @@
             <Label Content="Settings" FontWeight="Heavy" Foreground="White" Margin="10,6,206,6"/>
             <Image MouseLeftButtonDown="btnExit_Click" Margin="271,10,10,6" Source="/Theme/closebutton.png" Stretch="Fill"/>
             <Image MouseLeftButtonDown="btnSave_Click" Margin="94,3,94,0" Grid.Row="7" Source="/Theme/Save.png" Stretch="Fill"/>
+
 
         </Grid>
     </Border>

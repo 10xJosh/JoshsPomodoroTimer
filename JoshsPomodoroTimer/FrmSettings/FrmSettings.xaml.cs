@@ -14,11 +14,10 @@ using System.Windows.Shapes;
 
 namespace JoshsPomodoroTimer
 {
-    /// <summary>
-    /// Interaction logic for FrmSettings.xaml
-    /// </summary>
     public partial class FrmSettings : Window
     {
+        public double Volume { get; set; } = 90;
+
         public FrmSettings()
         {
             InitializeComponent();
@@ -40,13 +39,18 @@ namespace JoshsPomodoroTimer
 
         private void btnSave_Click(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Saved");
+            MessageBox.Show(Convert.ToDouble(sldrVolume.Value).ToString());
             this.Close();
         }
 
         private void btnExit_Click(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+        }
+
+        private void sldrVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Volume = sldrVolume.Value;
         }
     }
 }
