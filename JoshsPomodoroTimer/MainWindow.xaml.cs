@@ -19,12 +19,15 @@ namespace JoshsPomodoroTimer
 {
     public partial class MainWindow : Window
     {
-        public int Timer = 0;
+
+        public bool isTimerComplete { get; set; }
+        public bool isTimerActive { get; set; }
+
+        Functions.Timer timer = new Functions.Timer();
+
         public MainWindow()
         {
             InitializeComponent();
-
-
         }
 
         // This allows the window to be moved around when WindowStyle=None
@@ -40,26 +43,26 @@ namespace JoshsPomodoroTimer
                 return;
             }
         }
-        // TODO RE PLACE BELOW
+        
         private void btnStart_Click(object sender, MouseButtonEventArgs e)
         {
-            DispatcherTimer dispatchTimer = new DispatcherTimer();
-            dispatchTimer.Interval = TimeSpan.FromSeconds(1);
-            dispatchTimer.Tick += yeehaw;
-            dispatchTimer.Start();
+            isTimerActive = true;
+            
+            // Adding this check so that output shown will be in 00:00 format
+            // without it, timer will appear as 10:3 instead of 10:03
 
-            //MessageBox.Show("Start");
-        }
-
-        private void yeehaw(object o, EventArgs e)
-        {
-            Timer++;
-
-            lblTimer.Content = Timer.ToString();
+            var timerResult = timer.CountDown(timer.Minutes, timer.Seconds);
+            if (timerResult.Seconds != 0 && timerResult.Seconds < 10)
+            {
+                lblTimer.Content = $"{timerResult.Minutes}:0{timerResult.Seconds}";
+            }
+            else
+                lblTimer.Content = $"{timerResult.Minutes}:{timerResult.Seconds}";
         }
 
         private void btnStop_Click(object sender, MouseButtonEventArgs e)
         {
+            isTimerActive = false;
             MessageBox.Show("Stop");
         }
 
