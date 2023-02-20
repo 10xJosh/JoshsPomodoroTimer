@@ -17,6 +17,9 @@ namespace JoshsPomodoroTimer
     public partial class FrmSettings : Window
     {
         public double Volume { get; set; } = 90;
+        public bool IsPauseEffectBreakEnabled { get; set; }
+        public bool IsAutoStartBreakEnabled { get; set; }
+        public string AlarmSound { get; set; }
 
         public FrmSettings()
         {

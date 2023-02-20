@@ -10,7 +10,7 @@ namespace JoshsPomodoroTimer.Functions
 {
     internal class Timer
     {
-        public delegate int OnTimeChanged(int minutes, int seconds);
+        public delegate int OnTimeChanged();
         public static event OnTimeChanged TimeChanged;
 
         public int Minutes { get; private set; } = 25;
@@ -24,26 +24,25 @@ namespace JoshsPomodoroTimer.Functions
         public (int Minutes, int Seconds) CountDown(int minutes, int seconds)
         {
 
-            if(Seconds >= 60)
+            if (Seconds >= 60)
             {
                 throw new ArgumentOutOfRangeException("Seconds cant go past 59. Please convert into minutes.");
             }
 
-            if(Minutes != 0 && Seconds == 0)
+            if (Minutes != 0 && Seconds == 0)
             {
                 Minutes--;
-            }
-
-            if(Seconds == 0 && Minutes != 0)
-            {
                 Seconds = 59;
             }
-            else if (Seconds == 0 && Minutes == 0)
+
+            if (Seconds == 0 && Minutes == 0)
             {
                 Seconds = 0;
             }
-
-            Seconds--;
+            else
+            {
+                Seconds--;
+            }
 
             return (Minutes, Seconds);
         }

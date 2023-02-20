@@ -19,11 +19,15 @@ namespace JoshsPomodoroTimer
 {
     public partial class MainWindow : Window
     {
+        public bool IsTimerComplete { get; set; }
+        public bool IsTimerActive { get; set; }
+        public bool isBreakActive { get; set; }
+        public int SessionCounter { get; set; }
 
-        public bool isTimerComplete { get; set; }
-        public bool isTimerActive { get; set; }
+        CancellationTokenSource cancelToken = null;
 
         Functions.Timer timer = new Functions.Timer();
+        FrmSettings frmSettings = new FrmSettings();
 
         public MainWindow()
         {
@@ -44,25 +48,16 @@ namespace JoshsPomodoroTimer
             }
         }
         
-        private void btnStart_Click(object sender, MouseButtonEventArgs e)
+        private async void btnStart_Click(object sender, MouseButtonEventArgs e)
         {
-            isTimerActive = true;
-            
-            // Adding this check so that output shown will be in 00:00 format
-            // without it, timer will appear as 10:3 instead of 10:03
-
-            var timerResult = timer.CountDown(timer.Minutes, timer.Seconds);
-            if (timerResult.Seconds != 0 && timerResult.Seconds < 10)
-            {
-                lblTimer.Content = $"{timerResult.Minutes}:0{timerResult.Seconds}";
-            }
-            else
-                lblTimer.Content = $"{timerResult.Minutes}:{timerResult.Seconds}";
+            cancelToken = new CancellationTokenSource();
+            var token = cancelToken.Token;
+            await Task.Factory.StartNew(() => TimerStart(token));
         }
 
         private void btnStop_Click(object sender, MouseButtonEventArgs e)
         {
-            isTimerActive = false;
+            IsTimerActive = false;
             MessageBox.Show("Stop");
         }
 
@@ -73,12 +68,62 @@ namespace JoshsPomodoroTimer
 
         private void btnSettings_Click(object sender, MouseButtonEventArgs e)
         {
-            FrmSettings frmSettings= new FrmSettings();
             frmSettings.ShowDialog();
+        }
+
+        private void UpdateTimer()
+        {
+            // Adding this check so that output shown will be in 00:00 format
+            // without it, timer will appear as 10:3 instead of 10:03
+            var timerResult = timer.CountDown(timer.Minutes, timer.Seconds);
+            if (timerResult.Seconds < 10)
+            {
+                //lblTimer.Content = $"{timerResult.Minutes}:0{timerResult.Seconds}";
+
+                lblTimer.Dispatcher.BeginInvoke(new Action(() => { lblTimer.Content = $"{timerResult.Minutes}:0{timerResult.Seconds}"; }));
+            }
+            else
+            {
+                //TODO: Find a way to end the invoke method
+                //lblTimer.Content = $"{timerResult.Minutes}:{timerResult.Seconds}";
+                lblTimer.Dispatcher.BeginInvoke(new Action(() => { lblTimer.Content = $"{timerResult.Minutes}:{timerResult.Seconds}"; }));
+            }
+              
+            Thread.Sleep(1000);
+        }
+
+        private void TimerStart(CancellationToken token)
+        {
+            IsTimerActive = true;
+
+            if(token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            UpdateTimer();
+            
+
+            if(timer.Minutes == 0 && timer.Seconds == 0) 
+            {
+                SessionCounter++;
+                IsTimerActive = false;
+                return;
+                
+                if(frmSettings.IsAutoStartBreakEnabled) 
+                {
+                    
+                }
+            }
+            else
+            {
+               TimerStart(token);
+            }
         }
 
         private void btnExit_Click(object sender, MouseButtonEventArgs e)
         {
+            cancelToken.Dispose();
             this.Close();
         }
     }
