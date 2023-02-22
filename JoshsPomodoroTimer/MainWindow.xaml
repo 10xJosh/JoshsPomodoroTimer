@@ -31,10 +31,12 @@
             <Image Grid.Column="3" Margin="10,8,16,6"
                   Source="/Theme/closebutton.png"
                   MouseLeftButtonDown="btnExit_Click" />
-            <Image MouseLeftButtonDown="btnStart_Click" Grid.Column="1" Margin="10,263,311,10" Grid.Row="2" 
+            <Image Name="btnStart" MouseLeftButtonDown="btnStart_Click" Grid.Column="1" Margin="0,262,322,11" Grid.Row="2" 
                    Source="/Theme/Start.png" Stretch="Fill"/>
-            <Image MouseLeftButtonDown="btnPause_Click" Grid.Column="1" Margin="155,263,166,10" Grid.Row="2" Source="/Theme/pause.png" Stretch="Fill"/>
-            <Image MouseLeftButtonDown="btnStop_Click" Grid.Column="1" Margin="295,263,26,10" Grid.Row="2" Source="/Theme/stop.png" Stretch="Fill"/>
+            <Image Name="btnPause" MouseLeftButtonDown="btnPause_Click" Margin="311,261,10,11" Grid.Row="2" Source="/Theme/pause.png" Stretch="Fill" Grid.Column="1"
+                   />
+            <Image Name="btnStop" MouseLeftButtonDown="btnStop_Click" Grid.Column="1" Margin="161,261,161,12" Grid.Row="2" Source="/Theme/stop.png" Stretch="Fill"
+                   />
             <Image MouseLeftButtonDown="btnSettings_Click" Grid.Column="2" Margin="68,0,42,56" Source="/Theme/gear.png" Stretch="Fill" Grid.ColumnSpan="2"
                    ToolTip="Click to open the settings menu" Grid.RowSpan="2"
                    />

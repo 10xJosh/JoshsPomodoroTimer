@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -27,11 +28,34 @@ namespace JoshsPomodoroTimer
         CancellationTokenSource cancelToken = null;
 
         Functions.Timer timer = new Functions.Timer();
-        FrmSettings frmSettings = new FrmSettings();
+
+        public delegate void OnBreakReqiurementMet();
+        public static event OnBreakReqiurementMet BreakRequirementMet;
 
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public void StartBreak()
+        {
+            cancelToken = new CancellationTokenSource();
+            var token = cancelToken.Token;
+
+            lblHeader.Content = "Break Time!";
+
+            if (isBreakActive == true)
+            {
+                timer.Minutes = 5;
+                timer.Seconds = 0;
+                
+                UpdateTimer(token);
+            } 
+            else
+            {
+                timer.Minutes = 5;
+                timer.Seconds = 0;
+            }
         }
 
         // This allows the window to be moved around when WindowStyle=None
@@ -48,16 +72,19 @@ namespace JoshsPomodoroTimer
             }
         }
         
-        private async void btnStart_Click(object sender, MouseButtonEventArgs e)
+        private void btnStart_Click(object sender, MouseButtonEventArgs e)
         {
             cancelToken = new CancellationTokenSource();
             var token = cancelToken.Token;
-            await Task.Factory.StartNew(() => TimerStart(token));
+
+            Task.Factory.StartNew(() => TimerStart(token));
+
         }
 
         private void btnStop_Click(object sender, MouseButtonEventArgs e)
         {
             IsTimerActive = false;
+            cancelToken.Cancel();
             MessageBox.Show("Stop");
         }
 
@@ -68,28 +95,54 @@ namespace JoshsPomodoroTimer
 
         private void btnSettings_Click(object sender, MouseButtonEventArgs e)
         {
+            FrmSettings frmSettings = new FrmSettings();
             frmSettings.ShowDialog();
         }
 
-        private void UpdateTimer()
+        private void UpdateTimer(CancellationToken token)
         {
+            var tokenCancel = cancelToken.Token;
+
             // Adding this check so that output shown will be in 00:00 format
             // without it, timer will appear as 10:3 instead of 10:03
+
             var timerResult = timer.CountDown(timer.Minutes, timer.Seconds);
             if (timerResult.Seconds < 10)
             {
-                //lblTimer.Content = $"{timerResult.Minutes}:0{timerResult.Seconds}";
+                lblTimer.Dispatcher.BeginInvoke(
+                new Action(() => {
+                    if (cancelToken.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        lblTimer.Content = $"{timerResult.Minutes}:0{timerResult.Seconds}";
+                    }
 
-                lblTimer.Dispatcher.BeginInvoke(new Action(() => { lblTimer.Content = $"{timerResult.Minutes}:0{timerResult.Seconds}"; }));
+                }));
             }
             else
             {
-                //TODO: Find a way to end the invoke method
-                //lblTimer.Content = $"{timerResult.Minutes}:{timerResult.Seconds}";
-                lblTimer.Dispatcher.BeginInvoke(new Action(() => { lblTimer.Content = $"{timerResult.Minutes}:{timerResult.Seconds}"; }));
+
+                lblTimer.Dispatcher.BeginInvoke(
+                new Action(() => {
+                    if (cancelToken.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        lblTimer.Content = $"{timerResult.Minutes}:{timerResult.Seconds}";
+                    }
+                }));
+
+
             }
-              
+
             Thread.Sleep(1000);
+
+
         }
 
         private void TimerStart(CancellationToken token)
@@ -101,19 +154,20 @@ namespace JoshsPomodoroTimer
                 return;
             }
 
-            UpdateTimer();
+            UpdateTimer(token);
             
 
             if(timer.Minutes == 0 && timer.Seconds == 0) 
             {
                 SessionCounter++;
+
+                lblPomodoroCount.Dispatcher.BeginInvoke(
+                    new Action(() => {
+                        lblPomodoroCount.Content = SessionCounter; 
+                    }));
                 IsTimerActive = false;
+                StartBreak();
                 return;
-                
-                if(frmSettings.IsAutoStartBreakEnabled) 
-                {
-                    
-                }
             }
             else
             {
@@ -123,7 +177,11 @@ namespace JoshsPomodoroTimer
 
         private void btnExit_Click(object sender, MouseButtonEventArgs e)
         {
-            cancelToken.Dispose();
+            if(cancelToken != null)
+            {
+                cancelToken.Cancel();
+            }
+   
             this.Close();
         }
     }

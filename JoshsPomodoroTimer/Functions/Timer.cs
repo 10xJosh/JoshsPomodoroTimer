@@ -13,8 +13,8 @@ namespace JoshsPomodoroTimer.Functions
         public delegate int OnTimeChanged();
         public static event OnTimeChanged TimeChanged;
 
-        public int Minutes { get; private set; } = 25;
-        public int Seconds { get; private set; } = 0;
+        public int Minutes { get; set; } = 1;
+        public int Seconds { get; set; } = 0;
 
         public Timer()
         {
@@ -33,6 +33,7 @@ namespace JoshsPomodoroTimer.Functions
             {
                 Minutes--;
                 Seconds = 59;
+                return (Minutes, Seconds);
             }
 
             if (Seconds == 0 && Minutes == 0)

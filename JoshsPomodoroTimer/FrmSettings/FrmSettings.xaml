@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:JoshsPomodoroTimer"
         mc:Ignorable="d" Background="Transparent" 
         WindowStyle="None" AllowsTransparency="True"
-        Height="400" Width="300" WindowStartupLocation="CenterScreen">
+        Height="500" Width="300" WindowStartupLocation="CenterScreen">
     <Border Background="#302445" CornerRadius="15">
         <Grid>
             <Grid.RowDefinitions>
@@ -35,39 +35,50 @@
                    ToolTip="If checked, break and new session timer will automaticaly start after playing alarm sound."
                    />
 
+            <Label Grid.Row="3" Foreground="White" FontWeight="SemiBold" 
+                   Content="Break Duration:" FontSize="14" 
+                   Grid.RowSpan="3" Margin="10,4,-10,54"
+                   ToolTip="Determines how many minutes breaks will be"
+                   />
+
+            <ComboBox Name="cmboBoxBreakDuration" HorizontalAlignment="Left" 
+                      Margin="170,10,0,0" Grid.Row="3" 
+                      VerticalAlignment="Top" Width="120" SelectionChanged="cmboBoxBreakDuration_SelectionChanged"/>
+
             <CheckBox Name="chkboxAutoStartBreaks" HorizontalAlignment="Left" 
                       Margin="265,10,0,0" Grid.Row="2" VerticalAlignment="Top" />
 
 
-            <Label Grid.Row="3" Foreground="White" FontWeight="SemiBold" 
+            <Label Grid.Row="4" Foreground="White" FontWeight="SemiBold" 
                    Content="Alarm Sound:" FontSize="14" 
-                   Grid.RowSpan="2" Margin="10,0,-10,0"
+                   Grid.RowSpan="3" Margin="10,10,-10,47"
                    />
 
-            <ComboBox Name="cmboBoxAlarmSounds" Grid.Row="3" Width="150" Height="20" 
+            <ComboBox Name="cmboBoxAlarmSounds" Grid.Row="4" Width="150" Height="20" 
                       Margin="131,4,19,15"
                       />
 
-            <Label Grid.Row="4" Foreground="White" FontWeight="SemiBold" 
+            <Label Grid.Row="5" Foreground="White" FontWeight="SemiBold" 
                    Content="Volume:" FontSize="14" 
                    Grid.RowSpan="3" Margin="10,6,-10,41"
                    />
             <!-- TODO: figure out why value isnt changed when program is loaded -->
             <Slider Name="sldrVolume" TickFrequency="1" Ticks="100"
-                    HorizontalAlignment="Left" Margin="160,0,0,0" Grid.Row="4" 
+                    HorizontalAlignment="Left" Margin="160,0,0,0" Grid.Row="5" 
                     VerticalAlignment="Center" Width="120" 
                     Value="{Binding Path=Volume}" 
                     ValueChanged="sldrVolume_ValueChanged" 
                     />
-            
-            <Label Grid.Row="5" Foreground="White" FontWeight="SemiBold" 
+
+            <Label Grid.Row="6" Foreground="White" FontWeight="SemiBold" 
                    Content="Custom Timer interval" FontSize="14" 
                    Grid.RowSpan="2" Margin="10,0,-10,0"
                    />
 
             <Label Content="Settings" FontWeight="Heavy" Foreground="White" Margin="10,6,206,6"/>
-            <Image MouseLeftButtonDown="btnExit_Click" Margin="271,10,10,6" Source="/Theme/closebutton.png" Stretch="Fill"/>
-            <Image MouseLeftButtonDown="btnSave_Click" Margin="94,3,94,0" Grid.Row="7" Source="/Theme/Save.png" Stretch="Fill"/>
+            <Image MouseLeftButtonDown="btnExit_Click" Margin="273,0,0,0" Source="/Theme/closebutton.png" Stretch="Fill" Height="18" VerticalAlignment="Center" HorizontalAlignment="Left" Width="17"/>
+            <Image MouseLeftButtonDown="btnSave_Click" Margin="87,17,87,-7" Grid.Row="7" Source="/Theme/Save.png" Stretch="Fill"/>
+
 
 
         </Grid>

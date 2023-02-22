@@ -20,10 +20,12 @@ namespace JoshsPomodoroTimer
         public bool IsPauseEffectBreakEnabled { get; set; }
         public bool IsAutoStartBreakEnabled { get; set; }
         public string AlarmSound { get; set; }
+        public string BreakDuration { get; set; }
 
         public FrmSettings()
         {
             InitializeComponent();
+            InitializeComboBox();
 
         }
 
@@ -54,6 +56,20 @@ namespace JoshsPomodoroTimer
         private void sldrVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Volume = sldrVolume.Value;
+        }
+
+        private void cmboBoxBreakDuration_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void InitializeComboBox()
+        {
+            for (int i = 5; i < 35; i+=5)
+            {
+                cmboBoxBreakDuration.Items.Add($"{i} minutes");
+            }
+            
         }
     }
 }
