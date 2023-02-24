@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoshsPomodoroTimer.Functions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,10 @@ namespace JoshsPomodoroTimer
     public partial class FrmSettings : Window
     {
         public double Volume { get; set; } = 90;
-        public bool IsPauseEffectBreakEnabled { get; set; }
+        public bool doesPauseEffectedBreakEnabled { get; set; }
         public bool IsAutoStartBreakEnabled { get; set; }
         public string AlarmSound { get; set; }
-        public string BreakDuration { get; set; }
+        public int BreakDuration { get; set; }
 
         public FrmSettings()
         {
@@ -44,7 +45,16 @@ namespace JoshsPomodoroTimer
 
         private void btnSave_Click(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show(Convert.ToDouble(sldrVolume.Value).ToString());
+            Settings settings = new Settings(
+                Volume = sldrVolume.Value,
+                doesPauseEffectedBreakEnabled = doesPauseEffectedBreakEnabled,
+                IsAutoStartBreakEnabled = IsAutoStartBreakEnabled,
+                AlarmSound = AlarmSound,
+                BreakDuration = Int32.Parse(cmboBoxBreakDuration.Text.Replace(" minutes", ""))
+                
+                
+                );
+            settings.SaveSettings(settings);
             this.Close();
         }
 
@@ -55,7 +65,7 @@ namespace JoshsPomodoroTimer
 
         private void sldrVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Volume = sldrVolume.Value;
+            
         }
 
         private void cmboBoxBreakDuration_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -63,12 +73,14 @@ namespace JoshsPomodoroTimer
 
         }
 
+
         private void InitializeComboBox()
         {
             for (int i = 5; i < 35; i+=5)
             {
                 cmboBoxBreakDuration.Items.Add($"{i} minutes");
             }
+            cmboBoxBreakDuration.SelectedIndex = 0;
             
         }
     }

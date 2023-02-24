@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoshsPomodoroTimer.Functions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,7 @@ namespace JoshsPomodoroTimer
         public int SessionCounter { get; set; }
 
         CancellationTokenSource cancelToken = null;
-
+        Settings settings = new Settings();
         Functions.Timer timer = new Functions.Timer();
 
         public delegate void OnBreakReqiurementMet();
@@ -35,6 +36,7 @@ namespace JoshsPomodoroTimer
         public MainWindow()
         {
             InitializeComponent();
+            InitializeSettings();
         }
 
         public void StartBreak()
@@ -78,19 +80,20 @@ namespace JoshsPomodoroTimer
             var token = cancelToken.Token;
 
             Task.Factory.StartNew(() => TimerStart(token));
-
+            btnStart.IsEnabled = false;
         }
 
         private void btnStop_Click(object sender, MouseButtonEventArgs e)
         {
+            lblTimer.Content = $"{timer.Minutes}:{timer.Seconds}";
             IsTimerActive = false;
             cancelToken.Cancel();
-            MessageBox.Show("Stop");
         }
 
         private void btnPause_Click(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Pause");
+            IsTimerActive = false;
+            cancelToken.Cancel();
         }
 
         private void btnSettings_Click(object sender, MouseButtonEventArgs e)
@@ -151,6 +154,7 @@ namespace JoshsPomodoroTimer
 
             if(token.IsCancellationRequested)
             {
+                btnStart.Dispatcher.BeginInvoke(new Action(() => { btnStart.IsEnabled = true; }));
                 return;
             }
 
@@ -183,6 +187,11 @@ namespace JoshsPomodoroTimer
             }
    
             this.Close();
+        }
+
+        private void InitializeSettings()
+        {
+            lblTimer.Content = $"{timer.Minutes}:{timer.Seconds}0";
         }
     }
 }

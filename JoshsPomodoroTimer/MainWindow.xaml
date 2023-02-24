@@ -33,9 +33,9 @@
                   MouseLeftButtonDown="btnExit_Click" />
             <Image Name="btnStart" MouseLeftButtonDown="btnStart_Click" Grid.Column="1" Margin="0,262,322,11" Grid.Row="2" 
                    Source="/Theme/Start.png" Stretch="Fill"/>
-            <Image Name="btnPause" MouseLeftButtonDown="btnPause_Click" Margin="311,261,10,11" Grid.Row="2" Source="/Theme/pause.png" Stretch="Fill" Grid.Column="1"
+            <Image Name="btnPause" MouseLeftButtonDown="btnPause_Click" Margin="161,262,161,10" Grid.Row="2" Source="/Theme/pause.png" Stretch="Fill" Grid.Column="1"
                    />
-            <Image Name="btnStop" MouseLeftButtonDown="btnStop_Click" Grid.Column="1" Margin="161,261,161,12" Grid.Row="2" Source="/Theme/stop.png" Stretch="Fill"
+            <Image Name="btnStop" MouseLeftButtonDown="btnStop_Click" Grid.Column="1" Margin="310,262,12,11" Grid.Row="2" Source="/Theme/stop.png" Stretch="Fill"
                    />
             <Image MouseLeftButtonDown="btnSettings_Click" Grid.Column="2" Margin="68,0,42,56" Source="/Theme/gear.png" Stretch="Fill" Grid.ColumnSpan="2"
                    ToolTip="Click to open the settings menu" Grid.RowSpan="2"

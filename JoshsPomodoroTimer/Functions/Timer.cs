@@ -10,10 +10,7 @@ namespace JoshsPomodoroTimer.Functions
 {
     internal class Timer
     {
-        public delegate int OnTimeChanged();
-        public static event OnTimeChanged TimeChanged;
-
-        public int Minutes { get; set; } = 1;
+        public int Minutes { get; set; } = 25;
         public int Seconds { get; set; } = 0;
 
         public Timer()
