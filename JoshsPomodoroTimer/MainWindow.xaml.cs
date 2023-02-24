@@ -37,6 +37,8 @@ namespace JoshsPomodoroTimer
         {
             InitializeComponent();
             InitializeSettings();
+
+            FrmSettings.settingsChanged += settingsChanged;
         }
 
         public void StartBreak()
@@ -115,14 +117,9 @@ namespace JoshsPomodoroTimer
                 lblTimer.Dispatcher.BeginInvoke(
                 new Action(() => {
                     if (cancelToken.IsCancellationRequested)
-                    {
                         return;
-                    }
                     else
-                    {
                         lblTimer.Content = $"{timerResult.Minutes}:0{timerResult.Seconds}";
-                    }
-
                 }));
             }
             else
@@ -131,21 +128,13 @@ namespace JoshsPomodoroTimer
                 lblTimer.Dispatcher.BeginInvoke(
                 new Action(() => {
                     if (cancelToken.IsCancellationRequested)
-                    {
                         return;
-                    }
                     else
-                    {
                         lblTimer.Content = $"{timerResult.Minutes}:{timerResult.Seconds}";
-                    }
                 }));
-
-
             }
 
             Thread.Sleep(1000);
-
-
         }
 
         private void TimerStart(CancellationToken token)
@@ -189,9 +178,24 @@ namespace JoshsPomodoroTimer
             this.Close();
         }
 
+        private void settingsChanged(Settings settings)
+        {
+            timer.Minutes = settings.Minutes;
+            timer.Seconds= settings.Seconds;
+            InitializeSettings();
+        }
+
         private void InitializeSettings()
         {
-            lblTimer.Content = $"{timer.Minutes}:{timer.Seconds}0";
+            if (timer.Seconds < 10)
+            {
+                lblTimer.Content = $"{timer.Minutes}:0{timer.Seconds}";
+            }
+            else
+            {
+
+                lblTimer.Content = $"{timer.Minutes}:{timer.Seconds}";
+            }
         }
     }
 }
