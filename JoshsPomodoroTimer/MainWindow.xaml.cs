@@ -25,6 +25,9 @@ namespace JoshsPomodoroTimer
         public bool IsTimerActive { get; set; }
         public bool isBreakActive { get; set; }
         public int SessionCounter { get; set; }
+        public (int Minutes, int Seconds) TimeSelectedStorage { get; set;}
+
+        public int LongBreakInterval { get; set; } = 4;
 
         CancellationTokenSource cancelToken = null;
         Settings settings = new Settings();
@@ -46,20 +49,18 @@ namespace JoshsPomodoroTimer
             cancelToken = new CancellationTokenSource();
             var token = cancelToken.Token;
 
-            lblHeader.Content = "Break Time!";
+            lblHeader.Dispatcher.BeginInvoke(
+                new Action(() => {
+                        lblTimer.Content = $"Break Time!";
+                }));
 
-            if (isBreakActive == true)
+            if (SessionCounter == LongBreakInterval)
             {
                 timer.Minutes = 5;
                 timer.Seconds = 0;
                 
                 UpdateTimer(token);
             } 
-            else
-            {
-                timer.Minutes = 5;
-                timer.Seconds = 0;
-            }
         }
 
         // This allows the window to be moved around when WindowStyle=None
@@ -87,7 +88,7 @@ namespace JoshsPomodoroTimer
 
         private void btnStop_Click(object sender, MouseButtonEventArgs e)
         {
-            lblTimer.Content = $"{timer.Minutes}:{timer.Seconds}";
+            lblTimer.Content = $"{TimeSelectedStorage.Minutes}:{TimeSelectedStorage.Seconds}";
             IsTimerActive = false;
             cancelToken.Cancel();
         }
@@ -181,7 +182,10 @@ namespace JoshsPomodoroTimer
         private void settingsChanged(Settings settings)
         {
             timer.Minutes = settings.Minutes;
-            timer.Seconds= settings.Seconds;
+            timer.Seconds = settings.Seconds;
+            TimeSelectedStorage = (settings.Minutes, settings.Seconds);
+            LongBreakInterval = settings.LongBreakInterval;
+            MessageBox.Show("LongBreak interval = ", settings.LongBreakInterval.ToString());
             InitializeSettings();
         }
 

@@ -18,7 +18,7 @@ namespace JoshsPomodoroTimer
     public partial class FrmSettings : Window
     {
         public double Volume { get; set; } = 90;
-        public bool doesPauseEffectedBreakEnabled { get; set; }
+        public int LongBreakInterval { get; set; }
         public bool IsAutoStartBreakEnabled { get; set; } = true;
         public string AlarmSound { get; set; }
         public int BreakDuration { get; set; }
@@ -53,14 +53,14 @@ namespace JoshsPomodoroTimer
         {
             Settings settings = new Settings(
                 Volume = sldrVolume.Value,
-                doesPauseEffectedBreakEnabled = chkboxAutoStartBreaks.IsChecked.Value,
+                LongBreakInterval = Int32.Parse(cmboLongBreakInterval.Text),
                 IsAutoStartBreakEnabled = chkboxAutoStartBreaks.IsChecked.Value,
                 AlarmSound = AlarmSound,
                 BreakDuration = Int32.Parse(cmboBoxBreakDuration.Text.Replace(" minutes", "")),
                 Minutes = Int32.Parse(txtMinutes.Text),
                 Seconds = Int32.Parse(txtSeconds.Text)
                 );
-
+            
             settingsChanged(settings);
             this.Close();
         }
@@ -88,7 +88,13 @@ namespace JoshsPomodoroTimer
                 cmboBoxBreakDuration.Items.Add($"{i} minutes");
             }
             cmboBoxBreakDuration.SelectedIndex = 0;
-            
+
+            for (int i = 1; i < 8; i++)
+            {
+                cmboLongBreakInterval.Items.Add(i);
+            }
+            // 4 intervals is the default recommendation for pomodoro
+            cmboLongBreakInterval.SelectedIndex = 3; 
         }
 
         private void txtMinutes_TextChanged(object sender, TextChangedEventArgs e)
@@ -135,6 +141,11 @@ namespace JoshsPomodoroTimer
             {
                 txtSeconds.Text = "0";
             }
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

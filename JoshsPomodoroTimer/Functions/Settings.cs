@@ -9,7 +9,7 @@ namespace JoshsPomodoroTimer.Functions
     public class Settings
     {
         public double Volume { get; set; }
-        public bool doesPauseEffectBreakEnabled { get; set; }
+        public int LongBreakInterval{ get; set; }
         public bool IsAutoStartBreakEnabled { get; set; }
         public string AlarmSound { get; set; }
         public int BreakDuration { get; set; }
@@ -21,12 +21,12 @@ namespace JoshsPomodoroTimer.Functions
             
         }
 
-        public Settings(double volume, bool doesPauseEffectedBreakEnabled, bool IsAutoStartBreakEnabled,
+        public Settings(double volume, int LongBreakInterval, bool IsAutoStartBreakEnabled,
             string alarmSound, int BreakDuration, int minutes, int seconds) 
         {
             this.Volume = volume;
             this.BreakDuration = BreakDuration;
-            this.doesPauseEffectBreakEnabled = doesPauseEffectedBreakEnabled;
+            this.LongBreakInterval = LongBreakInterval;
             this.AlarmSound = alarmSound;
             this.BreakDuration = BreakDuration;
             this.Minutes = minutes;
@@ -37,7 +37,7 @@ namespace JoshsPomodoroTimer.Functions
         {
             this.Volume = settings.Volume;
             this.BreakDuration = settings.BreakDuration;
-            this.doesPauseEffectBreakEnabled = settings.doesPauseEffectBreakEnabled;
+            LongBreakInterval = settings.LongBreakInterval;
             this.AlarmSound = settings.AlarmSound;
             this.BreakDuration = settings.BreakDuration;
         }
@@ -49,7 +49,7 @@ namespace JoshsPomodoroTimer.Functions
             settings.AlarmSound = this.AlarmSound;
             settings.BreakDuration = this.BreakDuration;
             settings.IsAutoStartBreakEnabled = this.IsAutoStartBreakEnabled;
-            settings.doesPauseEffectBreakEnabled = this.doesPauseEffectBreakEnabled;
+            settings.LongBreakInterval = this.LongBreakInterval;
 
             return settings;
         }

@@ -26,9 +26,10 @@
                    ToolTip="Set how many intervals before a long break is started"
                    />
 
-            <CheckBox Name="chkboxPausesEffectBreak" HorizontalAlignment="Left" 
-                      Margin="265,15,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-
+            <ComboBox Name="cmboLongBreakInterval" Margin="188,14,18,37" Grid.Row="1" 
+                      SelectionChanged="ComboBox_SelectionChanged"
+            />
+            
             <Label Grid.Row="2" Foreground="White" FontWeight="SemiBold" 
                    Content="Automatically Start Breaks:" FontSize="14" 
                    Grid.RowSpan="2" Margin="10,0,-10,0"
