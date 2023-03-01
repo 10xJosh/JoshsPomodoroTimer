@@ -1,5 +1,6 @@
 ﻿using JoshsPomodoroTimer.Functions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,8 +26,7 @@ namespace JoshsPomodoroTimer
         public bool IsTimerActive { get; set; }
         public bool isBreakActive { get; set; }
         public int SessionCounter { get; set; }
-        public (int Minutes, int Seconds) TimeSelectedStorage { get; set;}
-
+        public (int Minutes, int Seconds) TimeSelectedStorage { get; set; } = (25, 0); 
         public int LongBreakInterval { get; set; } = 4;
 
         CancellationTokenSource cancelToken = null;
@@ -49,18 +49,18 @@ namespace JoshsPomodoroTimer
             cancelToken = new CancellationTokenSource();
             var token = cancelToken.Token;
 
-            lblHeader.Dispatcher.BeginInvoke(
-                new Action(() => {
-                        lblTimer.Content = $"Break Time!";
-                }));
+            lblHeader.Dispatcher.BeginInvoke(new Action(() => { lblHeader.Content = $"Break Time! Good Work!"; }));
 
             if (SessionCounter == LongBreakInterval)
             {
                 timer.Minutes = 5;
                 timer.Seconds = 0;
-                
-                UpdateTimer(token);
-            } 
+
+                Task.Factory.StartNew(() => BreakStart(token));
+            }
+            else
+                timer.Minutes = FrmSettings.BreakDuration;
+                Task.Factory.StartNew(() => BreakStart(token));
         }
 
         // This allows the window to be moved around when WindowStyle=None
@@ -88,9 +88,18 @@ namespace JoshsPomodoroTimer
 
         private void btnStop_Click(object sender, MouseButtonEventArgs e)
         {
-            lblTimer.Content = $"{TimeSelectedStorage.Minutes}:{TimeSelectedStorage.Seconds}";
             IsTimerActive = false;
-            cancelToken.Cancel();
+
+            if(cancelToken != null) 
+                cancelToken.Cancel();
+
+            if (TimeSelectedStorage.Seconds < 10)
+                lblTimer.Content = $"{TimeSelectedStorage.Minutes}:0{TimeSelectedStorage.Seconds}";
+            else
+                lblTimer.Content = $"{TimeSelectedStorage.Minutes}:{TimeSelectedStorage.Seconds}";
+
+            timer.Minutes = TimeSelectedStorage.Minutes;
+            timer.Seconds = TimeSelectedStorage.Seconds;
         }
 
         private void btnPause_Click(object sender, MouseButtonEventArgs e)
@@ -169,6 +178,47 @@ namespace JoshsPomodoroTimer
             }
         }
 
+        private void BreakStart(CancellationToken token)
+        {
+            IsTimerActive = true;
+
+            if (token.IsCancellationRequested)
+            {
+                btnStart.Dispatcher.BeginInvoke(new Action(() => { btnStart.IsEnabled = true; }));
+                return;
+            }
+
+            UpdateTimer(token);
+
+            if (timer.Minutes == 0 && timer.Seconds == 0 && FrmSettings.IsAutoStartBreakEnabled)
+            {
+                cancelToken = new CancellationTokenSource();
+                var tokenCancel = cancelToken.Token;
+
+                lblPomodoroCount.Dispatcher.BeginInvoke(
+                        new Action(() => {
+                            lblHeader.Content = $"Nothing to it but to do it!";
+                        }));
+
+                timer.Minutes = TimeSelectedStorage.Minutes;
+                timer.Seconds = TimeSelectedStorage.Seconds;
+                
+                TimerStart(tokenCancel);
+            }
+            else if (timer.Minutes == 0 && timer.Seconds == 0)
+            {
+                lblPomodoroCount.Dispatcher.BeginInvoke(
+                        new Action(() => {
+                            lblHeader.Content = $"Nothing to it but to do it!";
+                        }));
+                timer.Minutes = TimeSelectedStorage.Minutes;
+                timer.Seconds = TimeSelectedStorage.Seconds;
+                btnStart.Dispatcher.BeginInvoke( new Action(() => {btnStart.IsEnabled = true; }));
+            }
+            else
+                TimerStart(token);
+        }
+
         private void btnExit_Click(object sender, MouseButtonEventArgs e)
         {
             if(cancelToken != null)
@@ -185,21 +235,15 @@ namespace JoshsPomodoroTimer
             timer.Seconds = settings.Seconds;
             TimeSelectedStorage = (settings.Minutes, settings.Seconds);
             LongBreakInterval = settings.LongBreakInterval;
-            MessageBox.Show("LongBreak interval = ", settings.LongBreakInterval.ToString());
             InitializeSettings();
         }
 
         private void InitializeSettings()
         {
             if (timer.Seconds < 10)
-            {
                 lblTimer.Content = $"{timer.Minutes}:0{timer.Seconds}";
-            }
             else
-            {
-
                 lblTimer.Content = $"{timer.Minutes}:{timer.Seconds}";
-            }
         }
     }
 }

@@ -19,9 +19,9 @@ namespace JoshsPomodoroTimer
     {
         public double Volume { get; set; } = 90;
         public int LongBreakInterval { get; set; }
-        public bool IsAutoStartBreakEnabled { get; set; } = true;
+        public static bool IsAutoStartBreakEnabled { get; set; } = true;
         public string AlarmSound { get; set; }
-        public int BreakDuration { get; set; }
+        public static int BreakDuration { get; set; } = 5;
         public int Minutes { get; set; } = 25;
         public int Seconds { get; set; }
 
@@ -51,7 +51,10 @@ namespace JoshsPomodoroTimer
 
         private void btnSave_Click(object sender, MouseButtonEventArgs e)
         {
-            Settings settings = new Settings(
+            
+            try
+            {
+                Settings settings = new Settings(
                 Volume = sldrVolume.Value,
                 LongBreakInterval = Int32.Parse(cmboLongBreakInterval.Text),
                 IsAutoStartBreakEnabled = chkboxAutoStartBreaks.IsChecked.Value,
@@ -60,9 +63,14 @@ namespace JoshsPomodoroTimer
                 Minutes = Int32.Parse(txtMinutes.Text),
                 Seconds = Int32.Parse(txtSeconds.Text)
                 );
-            
-            settingsChanged(settings);
-            this.Close();
+
+                settingsChanged(settings);
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("There was an error with your minute/second input. Please try again.");
+            }
         }
 
         private void btnExit_Click(object sender, MouseButtonEventArgs e)
@@ -112,6 +120,7 @@ namespace JoshsPomodoroTimer
             }
             else if(txtMinutes.Text == string.Empty)
             {
+                txtMinutes.Text = "00";
                 return;
             }
             else
