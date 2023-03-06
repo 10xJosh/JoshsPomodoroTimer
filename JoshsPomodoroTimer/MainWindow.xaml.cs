@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,9 +29,10 @@ namespace JoshsPomodoroTimer
         public int SessionCounter { get; set; }
         public (int Minutes, int Seconds) TimeSelectedStorage { get; set; } = (25, 0); 
         public int LongBreakInterval { get; set; } = 4;
+        public int BreakDuration { get; set; } = 5;
 
         CancellationTokenSource cancelToken = null;
-        Settings settings = new Settings();
+        Settings settingsStorage = new Settings();
         Functions.Timer timer = new Functions.Timer();
 
         public delegate void OnBreakReqiurementMet();
@@ -42,25 +44,6 @@ namespace JoshsPomodoroTimer
             InitializeSettings();
 
             FrmSettings.settingsChanged += settingsChanged;
-        }
-
-        public void StartBreak()
-        {
-            cancelToken = new CancellationTokenSource();
-            var token = cancelToken.Token;
-
-            lblHeader.Dispatcher.BeginInvoke(new Action(() => { lblHeader.Content = $"Break Time! Good Work!"; }));
-
-            if (SessionCounter == LongBreakInterval)
-            {
-                timer.Minutes = 5;
-                timer.Seconds = 0;
-
-                Task.Factory.StartNew(() => BreakStart(token));
-            }
-            else
-                timer.Minutes = FrmSettings.BreakDuration;
-                Task.Factory.StartNew(() => BreakStart(token));
         }
 
         // This allows the window to be moved around when WindowStyle=None
@@ -110,8 +93,16 @@ namespace JoshsPomodoroTimer
 
         private void btnSettings_Click(object sender, MouseButtonEventArgs e)
         {
-            FrmSettings frmSettings = new FrmSettings();
-            frmSettings.ShowDialog();
+            if(settingsStorage != null)
+            {
+                FrmSettings frmSettings = new FrmSettings(settingsStorage);
+                frmSettings.ShowDialog();
+            } else
+            {
+                FrmSettings frmSettings = new FrmSettings();
+                frmSettings.ShowDialog();
+            }
+            
         }
 
         private void UpdateTimer(CancellationToken token)
@@ -178,6 +169,26 @@ namespace JoshsPomodoroTimer
             }
         }
 
+
+        public void StartBreak()
+        {
+            cancelToken = new CancellationTokenSource();
+            var token = cancelToken.Token;
+
+            lblHeader.Dispatcher.BeginInvoke(new Action(() => { lblHeader.Content = $"Break Time! Good Work!"; }));
+
+            if (SessionCounter == LongBreakInterval)
+            {
+                timer.Minutes = BreakDuration;
+                timer.Seconds = 0;
+
+                Task.Factory.StartNew(() => BreakStart(token));
+            }
+            else
+                timer.Minutes = FrmSettings.BreakDuration;
+            Task.Factory.StartNew(() => BreakStart(token));
+        }
+
         private void BreakStart(CancellationToken token)
         {
             IsTimerActive = true;
@@ -235,6 +246,7 @@ namespace JoshsPomodoroTimer
             timer.Seconds = settings.Seconds;
             TimeSelectedStorage = (settings.Minutes, settings.Seconds);
             LongBreakInterval = settings.LongBreakInterval;
+            BreakDuration = settings.BreakDuration;
             InitializeSettings();
         }
 

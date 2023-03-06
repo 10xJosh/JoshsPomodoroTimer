@@ -6,93 +6,115 @@
         xmlns:local="clr-namespace:JoshsPomodoroTimer"
         mc:Ignorable="d" Background="Transparent" 
         WindowStyle="None" AllowsTransparency="True"
-        Height="500" Width="300" WindowStartupLocation="CenterScreen">
+        Height="700" Width="300" WindowStartupLocation="CenterScreen">
     <Border Background="#302445" CornerRadius="15">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="37*"/>
+                <RowDefinition Height="65*"/>
+                <RowDefinition Height="76*"/>
+                <RowDefinition Height="53*"/>
+                <RowDefinition Height="63*"/>
+                <RowDefinition Height="68*"/>
+                <RowDefinition Height="84*"/>
                 <RowDefinition Height="60*"/>
-                <RowDefinition Height="50*"/>
-                <RowDefinition Height="39*"/>
-                <RowDefinition Height="48*"/>
-                <RowDefinition Height="47*"/>
-                <RowDefinition Height="46*"/>
-                <RowDefinition Height="73*"/>
+                <RowDefinition Height="103*"/>
+                <RowDefinition Height="128*"/>
             </Grid.RowDefinitions>
 
             <Label Grid.Row="1" Foreground="White" 
                    FontWeight="SemiBold"  Content="Long break interval:" FontSize="14" 
-                   Margin="10,10,-10,40" Grid.RowSpan="2"
+                   Margin="13,19,147,27" Height="30" Width="140"
                    ToolTip="Set how many intervals before a long break is started"
                    />
 
-            <ComboBox Name="cmboLongBreakInterval" Margin="188,14,18,37" Grid.Row="1" 
+            <ComboBox Name="cmboLongBreakInterval" Margin="188,21,18,29" Grid.Row="1" 
                       SelectionChanged="ComboBox_SelectionChanged"
             />
-            
+            <Label Grid.Row="3" Foreground="White" FontWeight="SemiBold" 
+                   Content="Long Break Duration:" FontSize="14" Margin="10,9,140,24" Height="30" Width="150"
+                   ToolTip="Determines the duration of long breaks once the long break interval is reached."
+                   />
+
+            <TextBox Name="txtLongBreakDuration" Text="30" HorizontalAlignment="Left" Margin="181,11,0,0" 
+                     Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="2" 
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                     FontWeight="Heavy" Foreground="White" Background="Transparent" CaretBrush="White"
+                     Width="32" Height="28" TextChanged="txtLongBreakDuration_TextChanged"
+                     />
+
+            <Label Grid.Row="3" Foreground="White" FontWeight="SemiBold" 
+                   Content="Minutes" FontSize="14" Height="30" Width="76" Margin="218,8,6,25"
+                   />
+
+
             <Label Grid.Row="2" Foreground="White" FontWeight="SemiBold" 
-                   Content="Automatically Start Breaks:" FontSize="14" 
-                   Grid.RowSpan="2" Margin="10,0,-10,0"
+                   Content="Automatically Start Breaks:" FontSize="14" Margin="13,11,87,12" Height="30" Width="200"
                    ToolTip="If checked, break and new session timer will automaticaly start after playing alarm sound."
                    />
 
-            <Label Grid.Row="3" Foreground="White" FontWeight="SemiBold" 
-                   Content="Break Duration:" FontSize="14" 
-                   Grid.RowSpan="3" Margin="10,4,-10,54"
-                   ToolTip="Determines how many minutes breaks will be"
+            <Label Grid.Row="4" Foreground="White" FontWeight="SemiBold" 
+                   Content="Break Duration:" FontSize="14" Height="30" Width="150" 
+                   ToolTip="Determines how many minutes breaks will be" Margin="12,14,138,24"
                    />
 
-            <ComboBox Name="cmboBoxBreakDuration" HorizontalAlignment="Left" 
-                      Margin="170,10,0,0" Grid.Row="3" 
-                      VerticalAlignment="Top" Width="120" SelectionChanged="cmboBoxBreakDuration_SelectionChanged"/>
+            <TextBox Name="txtBreakDuration" Text="5" HorizontalAlignment="Left" Margin="181,16,0,0" 
+                     Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="2" 
+                     HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+                     FontWeight="Heavy" Foreground="White" Background="Transparent" CaretBrush="White"
+                     Width="32" Height="28" TextChanged="txtBreakDuration_TextChanged"
+                     />
+
+            <Label Grid.Row="4" Foreground="White" FontWeight="SemiBold" 
+                   Content="Minutes" FontSize="14" Height="30" Width="80" Margin="218,14,2,24"
+                   />
 
             <CheckBox Name="chkboxAutoStartBreaks" HorizontalAlignment="Left" 
-                      Margin="265,10,0,0" Grid.Row="2" VerticalAlignment="Top"
-                      IsChecked="True"
+                      Margin="264,0,0,0" Grid.Row="2" VerticalAlignment="Center"
+                      IsChecked="True" Height="15" Width="16"
                       />
 
 
-            <Label Grid.Row="4" Foreground="White" FontWeight="SemiBold" 
+            <Label Grid.Row="5" Foreground="White" FontWeight="SemiBold" 
                    Content="Alarm Sound:" FontSize="14" 
                    Grid.RowSpan="3" Margin="10,10,-10,47"
                    />
 
-            <ComboBox Name="cmboBoxAlarmSounds" Grid.Row="4" Width="150" Height="20" 
-                      Margin="131,4,19,15"
+            <ComboBox Name="cmboBoxAlarmSounds" Grid.Row="5" 
+                      Margin="130,15,20,49" RenderTransformOrigin="0.487,0.122"
                       />
 
-            <Label Grid.Row="5" Foreground="White" FontWeight="SemiBold" 
+            <Label Grid.Row="6" Foreground="White" FontWeight="SemiBold" 
                    Content="Volume:" FontSize="14" 
                    Grid.RowSpan="3" Margin="10,6,-10,41"
                    />
             <!-- TODO: figure out why value isnt changed when program is loaded -->
             <Slider Name="sldrVolume" TickFrequency="1" Ticks="100"
-                    HorizontalAlignment="Left" Margin="160,0,0,0" Grid.Row="5" 
-                    VerticalAlignment="Center" Width="120" 
+                    HorizontalAlignment="Left" Margin="160,12,0,0" Grid.Row="6" 
+                    VerticalAlignment="Top" Width="120" 
                     Value="{Binding Path=Volume}" 
-                    ValueChanged="sldrVolume_ValueChanged" 
+                    ValueChanged="sldrVolume_ValueChanged" Height="18" 
                     />
 
-            <Label Grid.Row="6" Foreground="White" FontWeight="SemiBold" 
+            <Label Grid.Row="7" Foreground="White" FontWeight="SemiBold" 
                    Content="Timer:" FontSize="14" 
                    Grid.RowSpan="2" Margin="10,9,-10,-9"
                     />
-            
-            <Label Grid.Row="6" Foreground="White" FontWeight="SemiBold" 
+
+            <Label Grid.Row="7" Foreground="White" FontWeight="SemiBold" 
                    Content="Minutes" FontSize="14" 
                    Grid.RowSpan="2" Margin="108,9,-108,-9"
                    />
-            <TextBox Name="txtMinutes" Text="25" HorizontalAlignment="Left" Margin="71,10,0,0" Grid.Row="6" 
+            <TextBox Name="txtMinutes" Text="25" HorizontalAlignment="Left" Margin="71,10,0,0" Grid.Row="7" 
                      TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="2" HorizontalContentAlignment="Center"
                      VerticalContentAlignment="Center" FontWeight="Heavy" Foreground="White"
                      Background="Transparent" CaretBrush="White"
                      Width="32" Height="28" TextChanged="txtMinutes_TextChanged"
                      />
-            <Label Grid.Row="6" Foreground="White" FontWeight="SemiBold" 
+            <Label Grid.Row="7" Foreground="White" FontWeight="SemiBold" 
                    Content="Seconds" FontSize="14" 
                    Grid.RowSpan="2" Margin="220,9,-220,-9"
                    />
-            <TextBox Name="txtSeconds" Text="00" HorizontalAlignment="Left" Margin="181,11,0,0" Grid.Row="6" 
+            <TextBox Name="txtSeconds" Text="00" HorizontalAlignment="Left" Margin="181,11,0,0" Grid.Row="7" 
                      TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="2" HorizontalContentAlignment="Center"
                      VerticalContentAlignment="Center" Width="32" Height="28" FontWeight="Heavy" Foreground="White"
                      Background="Transparent" CaretBrush="White" TextChanged="txtSeconds_TextChanged" 
@@ -100,7 +122,7 @@
 
             <Label Content="Settings" FontWeight="Heavy" Foreground="White" Margin="10,6,206,6"/>
             <Image MouseLeftButtonDown="btnExit_Click" Margin="273,0,0,0" Source="/Theme/closebutton.png" Stretch="Fill" Height="18" VerticalAlignment="Center" HorizontalAlignment="Left" Width="17"/>
-            <Image MouseLeftButtonDown="btnSave_Click" Margin="87,17,87,-7" Grid.Row="7" Source="/Theme/Save.png" Stretch="Fill"/>
+            <Image MouseLeftButtonDown="btnSave_Click" Margin="76,15,76,10" Grid.Row="8" Source="/Theme/Save.png" Stretch="Fill"/>
 
 
 

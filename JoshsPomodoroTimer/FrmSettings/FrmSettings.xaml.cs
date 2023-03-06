@@ -24,6 +24,8 @@ namespace JoshsPomodoroTimer
         public static int BreakDuration { get; set; } = 5;
         public int Minutes { get; set; } = 25;
         public int Seconds { get; set; }
+        public int BreakMinutes { get; set; } = 5;
+        public int LongBreakMinutes { get; set; } = 30;
 
 
         public delegate void OnSettingsChanged(Settings settings);
@@ -33,7 +35,22 @@ namespace JoshsPomodoroTimer
         {
             InitializeComponent();
             InitializeComboBox();
+        }
+        //TODO: Connect these to the UI Elements
+        // 
 
+        public FrmSettings(Settings settings)
+        {
+            InitializeComponent();
+            InitializeComboBox();
+
+            settings.Volume = sldrVolume.Value;
+            settings.LongBreakInterval = this.LongBreakInterval;
+            settings.IsAutoStartBreakEnabled = FrmSettings.IsAutoStartBreakEnabled;
+            settings.AlarmSound = AlarmSound;
+            settings.BreakDuration = FrmSettings.BreakDuration;
+            settings.Minutes = this.Minutes;
+            settings.Seconds = this.Seconds;
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -56,10 +73,10 @@ namespace JoshsPomodoroTimer
             {
                 Settings settings = new Settings(
                 Volume = sldrVolume.Value,
-                LongBreakInterval = Int32.Parse(cmboLongBreakInterval.Text),
+                LongBreakInterval = Int32.Parse(txtLongBreakDuration.Text),
                 IsAutoStartBreakEnabled = chkboxAutoStartBreaks.IsChecked.Value,
                 AlarmSound = AlarmSound,
-                BreakDuration = Int32.Parse(cmboBoxBreakDuration.Text.Replace(" minutes", "")),
+                BreakDuration = Int32.Parse(txtBreakDuration.Text),
                 Minutes = Int32.Parse(txtMinutes.Text),
                 Seconds = Int32.Parse(txtSeconds.Text)
                 );
@@ -91,12 +108,6 @@ namespace JoshsPomodoroTimer
 
         private void InitializeComboBox()
         {
-            for (int i = 5; i < 35; i+=5)
-            {
-                cmboBoxBreakDuration.Items.Add($"{i} minutes");
-            }
-            cmboBoxBreakDuration.SelectedIndex = 0;
-
             for (int i = 1; i < 8; i++)
             {
                 cmboLongBreakInterval.Items.Add(i);
@@ -155,6 +166,54 @@ namespace JoshsPomodoroTimer
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void txtLongBreakDuration_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Int32.TryParse(txtLongBreakDuration.Text, out int minutes))
+            {
+                if (minutes > 61)
+                {
+                    txtLongBreakDuration.Text = "60";
+                }
+                else if (minutes < 0)
+                {
+                    txtLongBreakDuration.Text = "0";
+                }
+            }
+            else if (txtLongBreakDuration.Text == string.Empty)
+            {
+                txtLongBreakDuration.Text = "0";
+                return;
+            }
+            else
+            {
+                txtLongBreakDuration.Text = "30";
+            }
+        }
+
+        private void txtBreakDuration_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Int32.TryParse(txtBreakDuration.Text, out int minutes))
+            {
+                if (minutes > 61)
+                {
+                    txtBreakDuration.Text = "60";
+                }
+                else if (minutes < 0)
+                {
+                    txtBreakDuration.Text = "0";
+                }
+            }
+            else if (txtBreakDuration.Text == string.Empty)
+            {
+                txtBreakDuration.Text = "0";
+                return;
+            }
+            else
+            {
+                txtBreakDuration.Text = "5";
+            }
         }
     }
 }
