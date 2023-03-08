@@ -27,7 +27,7 @@
                    ToolTip="Set how many intervals before a long break is started"
                    />
 
-            <ComboBox Name="cmboLongBreakInterval" Margin="188,17,18,26" Grid.Row="1" 
+            <ComboBox Name="cmboLongBreakInterval" Margin="188,14,18,23" Grid.Row="1" 
                       SelectionChanged="ComboBox_SelectionChanged"
             />
             <Label Grid.Row="3" Foreground="White" FontWeight="SemiBold" 
@@ -35,7 +35,7 @@
                    ToolTip="Determines the duration of long breaks once the long break interval is reached."
                    />
 
-            <TextBox Name="txtLongBreakDuration" Text="30" HorizontalAlignment="Left" Margin="197,0,0,0" 
+            <TextBox Name="txtLongBreakDuration" Text="{Binding Path=LongBreakMinutes, Mode=TwoWay}" HorizontalAlignment="Left" Margin="197,0,0,0" 
                      Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" MaxLength="2" 
                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
                      FontWeight="Heavy" Foreground="White" Background="Transparent" CaretBrush="White"
@@ -57,7 +57,7 @@
                    ToolTip="Determines how many minutes breaks will be" Margin="12,14,138,19"
                    />
 
-            <TextBox Name="txtBreakDuration" Text="5" HorizontalAlignment="Left" Margin="197,0,0,0" 
+            <TextBox Name="txtBreakDuration" Text="{Binding Path=BreakDuration, Mode=TwoWay}" HorizontalAlignment="Left" Margin="197,0,0,0" 
                      Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" MaxLength="2" 
                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
                      FontWeight="Heavy" Foreground="White" Background="Transparent" CaretBrush="White"
@@ -91,7 +91,7 @@
             <Slider Name="sldrVolume" TickFrequency="1" Ticks="100"
                     HorizontalAlignment="Left" Margin="160,0,0,0" Grid.Row="6" 
                     VerticalAlignment="Center" Width="120" 
-                    Value="{Binding Path=Volume}" 
+                    Value="{Binding Path=Volume, Mode=TwoWay}" 
                     ValueChanged="sldrVolume_ValueChanged" Height="18" 
                     />
 
@@ -104,7 +104,7 @@
                    Content="Minutes" FontSize="14" 
                    Grid.RowSpan="2" Margin="108,9,-108,-9"
                    />
-            <TextBox Name="txtMinutes" Text="25" HorizontalAlignment="Left" Margin="71,10,0,0" Grid.Row="7" 
+            <TextBox Name="txtMinutes" Text="{Binding Path=Minutes, Mode=TwoWay}" HorizontalAlignment="Left" Margin="71,10,0,0" Grid.Row="7" 
                      TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="2" HorizontalContentAlignment="Center"
                      VerticalContentAlignment="Center" FontWeight="Heavy" Foreground="White"
                      Background="Transparent" CaretBrush="White"
@@ -114,7 +114,7 @@
                    Content="Seconds" FontSize="14" 
                    Grid.RowSpan="2" Margin="220,9,-220,-9"
                    />
-            <TextBox Name="txtSeconds" Text="00" HorizontalAlignment="Left" Margin="181,11,0,0" Grid.Row="7" 
+            <TextBox Name="txtSeconds" Text="{Binding Path=Seconds, Mode=TwoWay}" HorizontalAlignment="Left" Margin="181,11,0,0" Grid.Row="7" 
                      TextWrapping="Wrap" VerticalAlignment="Top" MaxLength="2" HorizontalContentAlignment="Center"
                      VerticalContentAlignment="Center" Width="32" Height="28" FontWeight="Heavy" Foreground="White"
                      Background="Transparent" CaretBrush="White" TextChanged="txtSeconds_TextChanged" 
@@ -123,10 +123,6 @@
             <Label Content="Settings" FontWeight="Heavy" Foreground="White" Margin="10,6,206,6"/>
             <Image MouseLeftButtonDown="btnExit_Click" Margin="273,0,0,0" Source="/Theme/closebutton.png" Stretch="Fill" Height="18" VerticalAlignment="Center" HorizontalAlignment="Left" Width="17"/>
             <Image MouseLeftButtonDown="btnSave_Click" Margin="90,0,90,-5" Grid.Row="8" Source="/Theme/Save.png" Stretch="Fill"/>
-
-
-
-
         </Grid>
     </Border>
 </Window>

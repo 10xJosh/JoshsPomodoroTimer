@@ -17,15 +17,15 @@ namespace JoshsPomodoroTimer
 {
     public partial class FrmSettings : Window
     {
-        public double Volume { get; set; } = 90;
-        public int LongBreakInterval { get; set; }
+        public static double Volume { get; set; } = 100;
+        public static int LongBreakInterval { get; set; }
         public static bool IsAutoStartBreakEnabled { get; set; } = true;
-        public string AlarmSound { get; set; }
+        public static string AlarmSound { get; set; }
         public static int BreakDuration { get; set; } = 5;
-        public int Minutes { get; set; } = 25;
-        public int Seconds { get; set; }
-        public int BreakMinutes { get; set; } = 5;
-        public int LongBreakMinutes { get; set; } = 30;
+        public static int Minutes { get; set; } = 25;
+        public static int Seconds { get; set; }
+        public static int BreakMinutes { get; set; } = 5;
+        public static int LongBreakMinutes { get; set; } = 30;
 
 
         public delegate void OnSettingsChanged(Settings settings);
@@ -35,6 +35,7 @@ namespace JoshsPomodoroTimer
         {
             InitializeComponent();
             InitializeComboBox();
+            DataContext = this;
         }
         //TODO: Connect these to the UI Elements
         // 
@@ -43,14 +44,15 @@ namespace JoshsPomodoroTimer
         {
             InitializeComponent();
             InitializeComboBox();
+            DataContext = this;
 
             settings.Volume = sldrVolume.Value;
-            settings.LongBreakInterval = this.LongBreakInterval;
+            settings.LongBreakInterval = FrmSettings.LongBreakInterval;
             settings.IsAutoStartBreakEnabled = FrmSettings.IsAutoStartBreakEnabled;
             settings.AlarmSound = AlarmSound;
             settings.BreakDuration = FrmSettings.BreakDuration;
-            settings.Minutes = this.Minutes;
-            settings.Seconds = this.Seconds;
+            settings.Minutes = FrmSettings.Minutes;
+            settings.Seconds = FrmSettings.Seconds;
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -73,7 +75,7 @@ namespace JoshsPomodoroTimer
             {
                 Settings settings = new Settings(
                 Volume = sldrVolume.Value,
-                LongBreakInterval = Int32.Parse(txtLongBreakDuration.Text),
+                LongBreakInterval = Int32.Parse(cmboLongBreakInterval.Text),
                 IsAutoStartBreakEnabled = chkboxAutoStartBreaks.IsChecked.Value,
                 AlarmSound = AlarmSound,
                 BreakDuration = Int32.Parse(txtBreakDuration.Text),

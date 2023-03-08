@@ -160,7 +160,7 @@ namespace JoshsPomodoroTimer
                         lblPomodoroCount.Content = SessionCounter; 
                     }));
                 IsTimerActive = false;
-                StartBreak();
+                StartBreakInitilization();
                 return;
             }
             else
@@ -170,16 +170,16 @@ namespace JoshsPomodoroTimer
         }
 
 
-        public void StartBreak()
+        public void StartBreakInitilization()
         {
             cancelToken = new CancellationTokenSource();
             var token = cancelToken.Token;
 
             lblHeader.Dispatcher.BeginInvoke(new Action(() => { lblHeader.Content = $"Break Time! Good Work!"; }));
 
-            if (SessionCounter == LongBreakInterval)
+            if (SessionCounter == FrmSettings.LongBreakInterval)
             {
-                timer.Minutes = BreakDuration;
+                timer.Minutes = FrmSettings.LongBreakMinutes;
                 timer.Seconds = 0;
 
                 Task.Factory.StartNew(() => BreakStart(token));
@@ -247,9 +247,16 @@ namespace JoshsPomodoroTimer
             TimeSelectedStorage = (settings.Minutes, settings.Seconds);
             LongBreakInterval = settings.LongBreakInterval;
             BreakDuration = settings.BreakDuration;
-            InitializeSettings();
-        }
 
+            if (IsTimerActive)
+            {
+                return;
+            }
+            else
+            {
+                InitializeSettings();
+            }
+        }
         private void InitializeSettings()
         {
             if (timer.Seconds < 10)
