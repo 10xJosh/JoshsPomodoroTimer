@@ -25,4 +25,8 @@
     <Resource Include="Theme\stop.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Alarm Sounds\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 ﻿using JoshsPomodoroTimer.Functions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -115,7 +116,28 @@ namespace JoshsPomodoroTimer
                 cmboLongBreakInterval.Items.Add(i);
             }
             // 4 intervals is the default recommendation for pomodoro
-            cmboLongBreakInterval.SelectedIndex = 3; 
+            cmboLongBreakInterval.SelectedIndex = 3;
+
+            try
+            {
+                string path = AppDomain.CurrentDomain.BaseDirectory + "Alarm Sounds";
+
+                foreach (var dir in Directory.GetFiles(path))
+                {
+                    if (dir.Contains(".mp3") || dir.Contains(".wav") || dir.Contains(".ogg"))
+                    {
+                        cmboBoxAlarmSounds.Items.Add(dir.Replace(path + "\\", ""));
+                    }
+                    else
+                        continue;
+                }
+
+                cmboBoxAlarmSounds.SelectedIndex = 0;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("There was an error getting the alarm sounds. The following exception was caught: " + e);
+            }
         }
 
         private void txtMinutes_TextChanged(object sender, TextChangedEventArgs e)
@@ -216,6 +238,11 @@ namespace JoshsPomodoroTimer
             {
                 txtBreakDuration.Text = "5";
             }
+        }
+
+        private void cmboBoxAlarmSounds_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

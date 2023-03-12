@@ -80,7 +80,7 @@
                    />
 
             <ComboBox Name="cmboBoxAlarmSounds" Grid.Row="5" 
-                      Margin="140,18,10,31" RenderTransformOrigin="0.487,0.122"
+                      Margin="140,14,10,30" RenderTransformOrigin="0.487,0.122" SelectionChanged="cmboBoxAlarmSounds_SelectionChanged"
                       />
 
             <Label Grid.Row="6" Foreground="White" FontWeight="SemiBold" 
