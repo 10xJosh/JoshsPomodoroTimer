@@ -21,7 +21,7 @@ namespace JoshsPomodoroTimer
         public static double Volume { get; set; } = 100;
         public static int LongBreakInterval { get; set; }
         public static bool IsAutoStartBreakEnabled { get; set; } = true;
-        public static string AlarmSound { get; set; }
+        public static string AlarmSound { get; set; } = AppDomain.CurrentDomain.BaseDirectory + "Alarm Sounds/Applause.mp3";
         public static int BreakDuration { get; set; } = 5;
         public static int Minutes { get; set; } = 25;
         public static int Seconds { get; set; }
@@ -50,7 +50,7 @@ namespace JoshsPomodoroTimer
             settings.Volume = sldrVolume.Value;
             settings.LongBreakInterval = FrmSettings.LongBreakInterval;
             settings.IsAutoStartBreakEnabled = FrmSettings.IsAutoStartBreakEnabled;
-            settings.AlarmSound = AlarmSound;
+            settings.AlarmSound = FrmSettings.AlarmSound;
             settings.BreakDuration = FrmSettings.BreakDuration;
             settings.Minutes = FrmSettings.Minutes;
             settings.Seconds = FrmSettings.Seconds;
@@ -78,7 +78,7 @@ namespace JoshsPomodoroTimer
                 Volume = sldrVolume.Value,
                 LongBreakInterval = Int32.Parse(cmboLongBreakInterval.Text),
                 IsAutoStartBreakEnabled = chkboxAutoStartBreaks.IsChecked.Value,
-                AlarmSound = AlarmSound,
+                AlarmSound = cmboBoxAlarmSounds.Text,
                 BreakDuration = Int32.Parse(txtBreakDuration.Text),
                 Minutes = Int32.Parse(txtMinutes.Text),
                 Seconds = Int32.Parse(txtSeconds.Text)
@@ -120,6 +120,8 @@ namespace JoshsPomodoroTimer
 
             try
             {
+                int counter = 0;
+
                 string path = AppDomain.CurrentDomain.BaseDirectory + "Alarm Sounds";
 
                 foreach (var dir in Directory.GetFiles(path))
@@ -127,17 +129,27 @@ namespace JoshsPomodoroTimer
                     if (dir.Contains(".mp3") || dir.Contains(".wav") || dir.Contains(".ogg"))
                     {
                         cmboBoxAlarmSounds.Items.Add(dir.Replace(path + "\\", ""));
+                        counter++;
                     }
                     else
                         continue;
                 }
 
-                cmboBoxAlarmSounds.SelectedIndex = 0;
+                if(counter == 0)
+                {
+                    AlarmSound = " ";
+                }
+                else
+                    cmboBoxAlarmSounds.SelectedIndex = 0;
             }
             catch (Exception e)
             {
                 MessageBox.Show("There was an error getting the alarm sounds. The following exception was caught: " + e);
             }
+
+
+            cmboBoxAlarmSounds.SelectedIndex = 0;
+            AlarmSound = cmboBoxAlarmSounds.Text;
         }
 
         private void txtMinutes_TextChanged(object sender, TextChangedEventArgs e)

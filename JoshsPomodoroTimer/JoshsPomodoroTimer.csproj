@@ -8,12 +8,39 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Alarm Sounds\angels-singing.mp3" />
+    <None Remove="Alarm Sounds\cash-register-sound-fx.mp3" />
+    <None Remove="Alarm Sounds\Elevator Bell Ding.mp3" />
+    <None Remove="Alarm Sounds\purge_siren.mp3" />
+    <None Remove="Alarm Sounds\quack.mp3" />
+    <None Remove="Alarm Sounds\yeet.mp3" />
     <None Remove="Theme\closebutton.png" />
     <None Remove="Theme\gear.png" />
     <None Remove="Theme\pause.png" />
     <None Remove="Theme\Save.png" />
     <None Remove="Theme\start.png" />
     <None Remove="Theme\stop.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Alarm Sounds\angels-singing.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Alarm Sounds\cash-register-sound-fx.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Alarm Sounds\Elevator Bell Ding.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Alarm Sounds\purge_siren.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Alarm Sounds\quack.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Alarm Sounds\yeet.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +53,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Alarm Sounds\" />
+    <None Update="Alarm Sounds\Applause.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

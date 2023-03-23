@@ -182,10 +182,13 @@ namespace JoshsPomodoroTimer
                 timer.Minutes = FrmSettings.LongBreakMinutes;
                 timer.Seconds = 0;
 
+                Alarm.PlayAlarm(AppDomain.CurrentDomain.BaseDirectory + "Alarm Sounds/" + FrmSettings.AlarmSound);
                 Task.Factory.StartNew(() => BreakStart(token));
             }
             else
                 timer.Minutes = FrmSettings.BreakDuration;
+
+            Alarm.PlayAlarm(AppDomain.CurrentDomain.BaseDirectory + "Alarm Sounds/" + FrmSettings.AlarmSound);
             Task.Factory.StartNew(() => BreakStart(token));
         }
 
@@ -213,7 +216,9 @@ namespace JoshsPomodoroTimer
 
                 timer.Minutes = TimeSelectedStorage.Minutes;
                 timer.Seconds = TimeSelectedStorage.Seconds;
-                
+
+                //Alarm.PlayAlarm(AppDomain.CurrentDomain.BaseDirectory + "Alarm Sounds/" + FrmSettings.AlarmSound);
+
                 TimerStart(tokenCancel);
             }
             else if (timer.Minutes == 0 && timer.Seconds == 0)
