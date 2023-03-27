@@ -41,7 +41,7 @@ namespace JoshsPomodoroTimer
         public MainWindow()
         {
             InitializeComponent();
-            InitializeSettings();
+            InitializeClockSettings();
 
             FrmSettings.settingsChanged += settingsChanged;
         }
@@ -237,8 +237,17 @@ namespace JoshsPomodoroTimer
                 btnStart.Dispatcher.BeginInvoke(new Action(() => { btnStart.IsEnabled = true; }));
                 return;
             }
-            
-            TimerStart(token);
+            else if(FrmSettings.IsAutoStartBreakEnabled == false)
+            {
+                btnStart.Dispatcher.BeginInvoke(new Action(() => { btnStart.IsEnabled = true; }));
+                lblTimer.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    InitializeClockSettings();
+                }));
+                return;
+            }
+            else
+                TimerStart(token);
         }
 
         private void btnExit_Click(object sender, MouseButtonEventArgs e)
@@ -265,10 +274,10 @@ namespace JoshsPomodoroTimer
             }
             else
             {
-                InitializeSettings();
+                InitializeClockSettings();
             }
         }
-        private void InitializeSettings()
+        private void InitializeClockSettings()
         {
             if (timer.Seconds < 10)
                 lblTimer.Content = $"{timer.Minutes}:0{timer.Seconds}";
