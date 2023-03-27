@@ -88,7 +88,8 @@ namespace JoshsPomodoroTimer
         private void btnPause_Click(object sender, MouseButtonEventArgs e)
         {
             IsTimerActive = false;
-            cancelToken.Cancel();
+            if (cancelToken != null)
+                cancelToken.Cancel();
         }
 
         private void btnSettings_Click(object sender, MouseButtonEventArgs e)
@@ -151,7 +152,7 @@ namespace JoshsPomodoroTimer
             UpdateTimer(token);
             
 
-            if(timer.Minutes == 0 && timer.Seconds == 0) 
+            if(timer.Minutes == 0 && timer.Seconds == 0 && isBreakActive == false) 
             {
                 SessionCounter++;
 
@@ -162,6 +163,39 @@ namespace JoshsPomodoroTimer
                 IsTimerActive = false;
                 StartBreakInitilization();
                 return;
+            }
+            else if(timer.Minutes == 0 && timer.Seconds == 0 && isBreakActive == true)
+            {
+
+                if (FrmSettings.IsAutoStartBreakEnabled == true)
+                {
+                    cancelToken = new CancellationTokenSource();
+                    var tokenCancel = cancelToken.Token;
+
+                    isBreakActive = false;
+
+                    lblPomodoroCount.Dispatcher.BeginInvoke(
+                            new Action(() => {
+                                lblHeader.Content = $"Nothing to it but to do it!";
+                            }));
+
+                    timer.Minutes = TimeSelectedStorage.Minutes;
+                    timer.Seconds = TimeSelectedStorage.Seconds;
+                    TimerStart(tokenCancel);
+                }
+                else
+                {
+                    isBreakActive = false;
+
+                    lblPomodoroCount.Dispatcher.BeginInvoke(
+                            new Action(() => {
+                                lblHeader.Content = $"Nothing to it but to do it!";
+                            }));
+                    timer.Minutes = TimeSelectedStorage.Minutes;
+                    timer.Seconds = TimeSelectedStorage.Seconds;
+                    btnStart.Dispatcher.BeginInvoke(new Action(() => { btnStart.IsEnabled = true; }));
+                    return;
+                }
             }
             else
             {
@@ -176,6 +210,7 @@ namespace JoshsPomodoroTimer
             var token = cancelToken.Token;
 
             lblHeader.Dispatcher.BeginInvoke(new Action(() => { lblHeader.Content = $"Break Time! Good Work!"; }));
+            isBreakActive = true;
 
             if (SessionCounter == FrmSettings.LongBreakInterval)
             {
@@ -201,38 +236,8 @@ namespace JoshsPomodoroTimer
                 btnStart.Dispatcher.BeginInvoke(new Action(() => { btnStart.IsEnabled = true; }));
                 return;
             }
-
-            UpdateTimer(token);
-
-            if (timer.Minutes == 0 && timer.Seconds == 0 && FrmSettings.IsAutoStartBreakEnabled)
-            {
-                cancelToken = new CancellationTokenSource();
-                var tokenCancel = cancelToken.Token;
-
-                lblPomodoroCount.Dispatcher.BeginInvoke(
-                        new Action(() => {
-                            lblHeader.Content = $"Nothing to it but to do it!";
-                        }));
-
-                timer.Minutes = TimeSelectedStorage.Minutes;
-                timer.Seconds = TimeSelectedStorage.Seconds;
-
-                //Alarm.PlayAlarm(AppDomain.CurrentDomain.BaseDirectory + "Alarm Sounds/" + FrmSettings.AlarmSound);
-
-                TimerStart(tokenCancel);
-            }
-            else if (timer.Minutes == 0 && timer.Seconds == 0)
-            {
-                lblPomodoroCount.Dispatcher.BeginInvoke(
-                        new Action(() => {
-                            lblHeader.Content = $"Nothing to it but to do it!";
-                        }));
-                timer.Minutes = TimeSelectedStorage.Minutes;
-                timer.Seconds = TimeSelectedStorage.Seconds;
-                btnStart.Dispatcher.BeginInvoke( new Action(() => {btnStart.IsEnabled = true; }));
-            }
-            else
-                TimerStart(token);
+            
+            TimerStart(token);
         }
 
         private void btnExit_Click(object sender, MouseButtonEventArgs e)
