@@ -221,10 +221,11 @@ namespace JoshsPomodoroTimer
                 Task.Factory.StartNew(() => BreakStart(token));
             }
             else
+            {
                 timer.Minutes = FrmSettings.BreakDuration;
-
-            Alarm.PlayAlarm(AppDomain.CurrentDomain.BaseDirectory + "Alarm Sounds/" + FrmSettings.AlarmSound);
-            Task.Factory.StartNew(() => BreakStart(token));
+                Alarm.PlayAlarm(AppDomain.CurrentDomain.BaseDirectory + "Alarm Sounds/" + FrmSettings.AlarmSound);
+                Task.Factory.StartNew(() => BreakStart(token));
+            }
         }
 
         private void BreakStart(CancellationToken token)
