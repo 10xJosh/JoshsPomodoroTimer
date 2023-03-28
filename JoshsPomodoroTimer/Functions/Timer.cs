@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace JoshsPomodoroTimer.Functions
 {
@@ -13,10 +7,7 @@ namespace JoshsPomodoroTimer.Functions
         public int Minutes { get; set; } = 25;
         public int Seconds { get; set; } = 0;
 
-        public Timer()
-        {
-
-        }
+        public Timer() { }
 
         public (int Minutes, int Seconds) CountDown(int minutes, int seconds)
         {

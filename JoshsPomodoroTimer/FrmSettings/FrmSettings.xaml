@@ -27,9 +27,8 @@
                    ToolTip="Set how many intervals before a long break is started"
                    />
 
-            <ComboBox Name="cmboLongBreakInterval" Margin="188,14,18,23" Grid.Row="1" 
-                      SelectionChanged="ComboBox_SelectionChanged"
-            />
+            <ComboBox Name="cmboLongBreakInterval" Margin="188,14,18,23" Grid.Row="1" />
+            
             <Label Grid.Row="3" Foreground="White" FontWeight="SemiBold" 
                    Content="Long Break Duration:" FontSize="14" Margin="10,9,140,10"
                    ToolTip="Determines the duration of long breaks once the long break interval is reached."
@@ -80,14 +79,13 @@
                    />
 
             <ComboBox Name="cmboBoxAlarmSounds" Grid.Row="5" 
-                      Margin="140,14,10,30" RenderTransformOrigin="0.487,0.122" SelectionChanged="cmboBoxAlarmSounds_SelectionChanged"
-                      />
+                      Margin="140,14,10,30" RenderTransformOrigin="0.487,0.122"/>
 
             <Label Grid.Row="6" Foreground="White" FontWeight="SemiBold" 
                    Content="Volume:" FontSize="14" 
                    Grid.RowSpan="3" Margin="10,6,-10,13"
                    />
-            <!-- TODO: figure out why value isnt changed when program is loaded -->
+            
             <Slider Name="sldrVolume" TickFrequency="1" Ticks="100"
                     HorizontalAlignment="Left" Margin="160,0,0,0" Grid.Row="6" 
                     VerticalAlignment="Center" Width="120" 

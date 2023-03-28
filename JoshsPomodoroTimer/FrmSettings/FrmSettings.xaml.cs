@@ -1,18 +1,9 @@
 ﻿using JoshsPomodoroTimer.Functions;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace JoshsPomodoroTimer
 {
@@ -25,7 +16,6 @@ namespace JoshsPomodoroTimer
         public static int BreakDuration { get; set; } = 5;
         public static int Minutes { get; set; } = 25;
         public static int Seconds { get; set; }
-        public static int BreakMinutes { get; set; } = 5;
         public static int LongBreakMinutes { get; set; } = 30;
 
 
@@ -102,12 +92,6 @@ namespace JoshsPomodoroTimer
         {
             
         }
-
-        private void cmboBoxBreakDuration_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
 
         private void InitializeComboBox()
         {
@@ -199,11 +183,6 @@ namespace JoshsPomodoroTimer
             }
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void txtLongBreakDuration_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Int32.TryParse(txtLongBreakDuration.Text, out int minutes))
@@ -250,11 +229,6 @@ namespace JoshsPomodoroTimer
             {
                 txtBreakDuration.Text = "5";
             }
-        }
-
-        private void cmboBoxAlarmSounds_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }
