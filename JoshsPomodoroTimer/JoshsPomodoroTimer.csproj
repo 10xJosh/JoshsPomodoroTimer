@@ -5,6 +5,9 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <Title>Josh's Pomodoro Timer</Title>
+    <RepositoryType>https://github.com/10xJosh/JoshsPomodoroTimer</RepositoryType>
+    <PackageIcon>tomato.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +20,7 @@
     <None Remove="Theme\closebutton.png" />
     <None Remove="Theme\gear.png" />
     <None Remove="Theme\pause.png" />
+    <None Remove="Theme\ProgramIcon.ico" />
     <None Remove="Theme\Save.png" />
     <None Remove="Theme\start.png" />
     <None Remove="Theme\stop.png" />
@@ -41,6 +45,16 @@
     <Content Include="Alarm Sounds\yeet.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Theme\ProgramIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\Downloads\tomato.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
