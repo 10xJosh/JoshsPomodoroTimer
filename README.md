@@ -6,8 +6,9 @@ A simple pomodoro timer that can be used to help you keep track and stay focused
 
 To install, simply copy the repo or download the .exe thats found in the repo! Feel free to leave any comments or concerns!
 
-(For those that are curious)Key Takeaways:
-- UI elements such as labels cant be updated if a method is changing it
+<h2>Learning Takeaways (For those that are curious):</h2> 
+
+ - UI elements such as labels cant be updated if a method is changing it
 on a seperate thread. Use labelname.Dispatcher.BeginInvoke(new Action(() => {//code goes here};); to get around this.
 
 - Becareful Instantiating a form object, they can lead to memory leaks
