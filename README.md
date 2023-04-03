@@ -1,5 +1,10 @@
 # JoshsPomodoroTimer
-WORK IN PROGRESS
+A simple pomodoro timer that can be used to help you keep track and stay focused on your work.
+
+![pomodorotimer](https://user-images.githubusercontent.com/55113224/229462544-f7df4b6e-e893-4f39-aba7-e11d46930a10.gif)
+
+
+To install, simply copy the repo or download the .exe thats found in the repo! Feel free to leave any comments or concerns!
 
 (For those that are curious)Key Takeaways:
 - UI elements such as labels cant be updated if a method is changing it
